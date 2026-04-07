@@ -1,6 +1,7 @@
 package efr.iv.igr.service
 
 import efr.iv.igr.dto.*
+import efr.iv.igr.exception.TaskNotFoundException
 import efr.iv.igr.model.TaskStatus
 import efr.iv.igr.repository.TaskRepository
 import org.springframework.stereotype.Service
@@ -26,7 +27,7 @@ class TaskServiceImpl(
     override fun getTaskById(id: Long): Mono<InformationTaskResponse> {
         return Mono.fromCallable {
             val task = taskRepository.findById(id)
-            task ?: throw IllegalArgumentException("Task with ID $id not found.")
+            task ?: throw TaskNotFoundException("Task with ID $id not found.")
         }
             .subscribeOn(scheduler)
             .map { it.informationTaskResponse() }
@@ -61,7 +62,7 @@ class TaskServiceImpl(
             val updateDateTime = LocalDateTime.now()
             taskRepository.takeIf { it.updateStatus(id, updateDateTime, updateTaskStatusRequest.status) }
                 ?.findById(id)
-                ?: throw IllegalArgumentException("Task with ID $id not found.")
+                ?: throw TaskNotFoundException("Task with ID $id not found.")
         }
             .subscribeOn(scheduler)
             .map { it.informationTaskResponse() }
@@ -74,7 +75,7 @@ class TaskServiceImpl(
             .subscribeOn(scheduler)
             .flatMap { deleted ->
                 if (deleted) Mono.empty()
-                else Mono.error { IllegalArgumentException("Task with ID $id not found.") }
+                else Mono.error { TaskNotFoundException("Task with ID $id not found.") }
             }
     }
 }

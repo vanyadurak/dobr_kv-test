@@ -3,6 +3,7 @@ package efr.iv.igr.controller
 import efr.iv.igr.dto.*
 import efr.iv.igr.model.TaskStatus
 import efr.iv.igr.service.TaskService
+import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import reactor.core.publisher.Mono
@@ -12,11 +13,12 @@ import reactor.core.publisher.Mono
 class TaskController(private val taskService: TaskService) {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun createTask(@RequestBody createTaskRequest: CreateTaskRequest): Mono<CreatedTaskResponse> {
+    fun createTask(@Valid @RequestBody createTaskRequest: CreateTaskRequest): Mono<CreatedTaskResponse> {
         return taskService.createTask(createTaskRequest)
     }
 
     @GetMapping
+    @ResponseStatus(HttpStatus.OK)
     fun getTasks(
         @RequestParam page: Int,
         @RequestParam size: Int,
