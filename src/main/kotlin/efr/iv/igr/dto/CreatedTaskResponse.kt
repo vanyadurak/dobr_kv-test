@@ -15,7 +15,7 @@ data class CreatedTaskResponse(
 
 fun Task.createdTaskResponse(): CreatedTaskResponse {
     return CreatedTaskResponse(
-        id = this.id ?: throw IllegalStateException("The ID cannot be empty."),
+        id = this.id!!,
         title = this.title,
         description = this.description,
         status = this.status,

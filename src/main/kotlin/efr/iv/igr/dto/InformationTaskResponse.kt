@@ -15,7 +15,7 @@ data class InformationTaskResponse(
 
 fun Task.informationTaskResponse(): InformationTaskResponse {
     return InformationTaskResponse(
-        id = this.id ?: throw IllegalStateException("The ID cannot be empty."),
+        id = this.id!!,
         title = this.title,
         description = this.description,
         status = this.status,

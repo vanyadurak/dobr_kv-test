@@ -37,18 +37,6 @@ class GlobalExceptionHandler {
         )
     }
 
-    @ExceptionHandler(IllegalArgumentException::class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    fun handleIllegalArgumentException(ex: IllegalArgumentException): Mono<ErrorResponse> {
-        return Mono.just(
-            ErrorResponse(
-                status = HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                code = "INVALID_SERVER_ERROR",
-                message = ex.message
-            )
-        )
-    }
-
     @ExceptionHandler(Exception::class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     fun handleException(ex: Exception): Mono<ErrorResponse> {
