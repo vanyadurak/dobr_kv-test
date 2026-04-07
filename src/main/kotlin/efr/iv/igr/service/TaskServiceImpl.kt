@@ -49,7 +49,7 @@ class TaskServiceImpl(
                 page = page,
                 size = size,
                 totalElements = total,
-                totalPages = ceil(total.toDouble() / tasks.size).toInt(),
+                totalPages = ceil(total.toDouble() / size).toInt(),
             )
         }.subscribeOn(scheduler)
     }
@@ -70,12 +70,10 @@ class TaskServiceImpl(
 
     override fun deleteTask(id: Long): Mono<Void> {
         return Mono.fromCallable {
-            taskRepository.deleteById(id)
+            val deleted = taskRepository.deleteById(id)
+            if (!deleted) throw TaskNotFoundException("Task with ID $id not found.")
         }
             .subscribeOn(scheduler)
-            .flatMap { deleted ->
-                if (deleted) Mono.empty()
-                else Mono.error { TaskNotFoundException("Task with ID $id not found.") }
-            }
+            .then()
     }
 }

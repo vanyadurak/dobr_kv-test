@@ -1,3 +1,3 @@
 databaseChangeLog:
   - include:
-      file: classpath://db/migration/V2026_04_06_19_49__create_tasks_table.sql
+      file: classpath:db/migration/V2026_04_06_19_49__create_tasks_table.sql
