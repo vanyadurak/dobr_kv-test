@@ -1,3 +1,9 @@
 spring:
   application:
     name: dobr_kv-test
+
+  datasource:
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    name: ${POSTGRES_DB}
+    url: ${POSTGRES_URL}

@@ -1,4 +1,4 @@
-package efr.iv.igr.dobr_kvtest
+package efr.iv.igr
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
